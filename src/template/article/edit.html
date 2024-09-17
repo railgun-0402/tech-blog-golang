@@ -1,0 +1,19 @@
+{% extends "../layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/css/article/edit.css" />
+{% endblock %}
+
+{% block js %}
+<script src="/js/article/edit.js"></script>
+{% endblock %}
+
+{% block title %}
+編集 | {{ block.Super }}
+{% endblock %}
+
+{% block content %}
+<p>{{ Message }}</p>
+<p>{{ Now }}</p>
+<p>{{ ID }}</p>
+{% endblock %}

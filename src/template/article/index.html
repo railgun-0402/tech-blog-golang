@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="/css/article/index.css">
-    <title>MyTechBlog</title>
-</head>
+{% extends "../layout.html" %}
 
-<body>
-<h1>MyTechBlog</h1>
+{% block css %}
+<link rel="stylesheet" href="/css/article/index.css" />
+{% endblock %}
+
+{% block js %}
+<script src="/js/article/index.js"></script>
+{% endblock %}
+
+{% block content %}
 <p>{{ Message }}</p>
 <p>{{ Now }}</p>
-
-<script src="/js/article/index.js"></script>
-</body>
-</html>
+<h2>記事一覧</h2>
+<ul>
+    {% for article in Articles %}
+    <li>{{ article.ID }}. {{ article.Title }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
