@@ -1,0 +1,32 @@
+<form class="article-form l-row" name="article-form">
+    <ul class="article-form__errors"></ul>
+    <div class="article-form__error-tmpl" style="display: none">
+        <li class="article-form__error"></li>
+    </div>
+
+    <div class="article-form__title">
+        <label class="article-form__label" for="form-title">タイトル</label>
+        <input class="article-form__input" type="text" name="title" id="form-title" value="{{ Article.Title }}">
+    </div>
+
+    <div class="article-form__body">
+        <label class="article-form__label article-form__label--body" for="form-body">本文</label>
+        <i class="fas fa-eye article-form__open-preview"></i>
+        <textarea class="article-form__input article-form__input--body" name="body"
+                  id="form-body">{{ Article.Body }}</textarea>
+    </div>
+
+    <div class="article-form__preview">
+        <div class="form__label article-form____label--preview">プレビュー</div>
+        <i class="fas fa-eye-slash article-form__close-preview"></i>
+        <div class="article-form__preview-body">
+            <div class="article-form__preview-body-contents" id="article-body">
+            </div>
+        </div>
+    </div>
+
+    <div class="article-form__footer">
+        <button class="article-form__cancel btn--info">キャンセル</button>
+        <button class="article-form__save btn--primary" id="article-form__save">保存</button>
+    </div>
+</form>

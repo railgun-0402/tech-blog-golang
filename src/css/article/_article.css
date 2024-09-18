@@ -1,0 +1,155 @@
+#article-body > blockquote {
+    background: #f3f3f3;
+    padding: 10px 12px;
+    font-style: italic;
+    color: #777;
+    border-left: solid 40px #c4c4c4;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.19);
+    position: relative;
+}
+
+#article-body > blockquote:before {
+    position: absolute;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: 22px;
+    line-height: 1;
+    content: '\f10d';
+    color: #fff;
+    display: inline-block;
+    top: 50%;
+    left: -32px;
+    transform: translateY(-50%);
+}
+
+#article-body > p code {
+    display: inline-block;
+    background: #eee;
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+
+#article-body pre {
+    background: #272822;
+    color: #fff;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 0.3em;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    word-spacing: normal;
+    word-break: normal;
+    white-space: pre;
+    word-wrap: normal;
+    line-height: 1.5;
+    tab-size: 4;
+    overflow-x: scroll;
+}
+
+#article-body > *:not(pre) {
+    display: block;
+    max-width: 92%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#article-body > h1 {
+    font-size: 28px;
+}
+
+#article-body > h2 {
+    font-size: 24px;
+    background: #f7f7f7;
+    padding: 8px 12px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+    border-left: 3px solid #333;
+    border-bottom: 3px solid #dadada;
+}
+
+#article-body > h3 {
+    font-size: 20px;
+    padding: 8px 12px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+#article-body > h3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 4px;
+    background: #333;
+    border-radius: 2px;
+}
+
+#article-body > h4 {
+    font-size: 16px;
+    position: relative;
+    padding: 0 0 0 15px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+
+#article-body > h4::before {
+    font-family: 'Font Awesome 5 Free';
+    content: '\f00c';
+    font-size: 0.6em;
+    position: absolute;
+    top: 50%;
+    left: -1px;
+    transform: translate(0, -50%);
+}
+
+#article-body > h5 {
+    font-size: 12px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+}
+
+#article-body > p,
+#article-body > ul,
+#article-body > ol {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+#article-body > ul > li,
+#article-body > ol > li {
+    margin-left: 20px;
+}
+
+#article-body li > ul,
+#article-body li > ol {
+    margin-left: 20px;
+}
+
+#article-body > table {
+    border-collapse: collapse;
+}
+
+#article-body > table th,
+#article-body > table td {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+}
+
+#article-body > table > tbody tr:nth-of-type(odd) {
+    background: #eee;
+}
+
+#article-body a {
+    color: #0000ee;
+}
+
+#article-body > *:first-child {
+    margin-top: 0;
+}
+
+#article-body > *:last-child {
+    margin-bottom: 48px;
+}
