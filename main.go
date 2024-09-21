@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"go-tech-blog/handler"
 	"go-tech-blog/repository"
+	"gopkg.in/go-playground/validator.v9"
 	"log"
 	"os"
 )
@@ -23,6 +24,7 @@ func main() {
 	e.GET("/new", handler.ArticleNew)
 	e.GET("/:id", handler.ArticleShow)
 	e.GET("/:id/edit", handler.ArticleEdit)
+	e.POST("/", handler.ArticleCreate)
 
 	// Webサーバーをポート番号 8080 で起動する
 	e.Logger.Fatal(e.Start(":8080"))
@@ -50,11 +52,24 @@ func createMux() *echo.Echo {
 	e.Use(middleware.Recover()) // パニック時、アプリが停止しないよう回復する
 	e.Use(middleware.Logger())  // ログを記録する
 	e.Use(middleware.Gzip())    // レスポンスをGzip圧縮して転送する
+	e.Use(middleware.CSRF())    // CSRF対策
 
 	// `src/css` ディレクトリ配下のファイルに `/css` のパスでアクセスできるようにする
 	e.Static("/css", "src/css")
 	e.Static("/js", "src/js")
 
+	e.Validator = &CustomValidator{validator: validator.New()}
+
 	// アプリインスタンスを返却
 	return e
+}
+
+// CustomValidator ...
+type CustomValidator struct {
+	validator *validator.Validate
+}
+
+// Validate ...
+func (cv *CustomValidator) Validate(i interface{}) error {
+	return cv.validator.Struct(i)
 }
