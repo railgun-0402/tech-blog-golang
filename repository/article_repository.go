@@ -67,3 +67,17 @@ func ArticleCreate(article *model.Article) (sql.Result, error) {
 	tx.Commit()
 	return res, nil
 }
+
+// ArticleDelete ... IDに紐づく記事を削除する
+func ArticleDelete(id int) error {
+	query := "DELETE FROM articles WHERE id = ?"
+
+	tx := db.MustBegin()
+
+	if _, err := tx.Exec(query, id); err != nil {
+		tx.Rollback()
+
+		return err
+	}
+	return tx.Commit()
+}

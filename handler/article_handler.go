@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"go-tech-blog/model"
 	"net/http"
 	"strconv"
@@ -111,4 +112,16 @@ func ArticleEdit(c echo.Context) error {
 	}
 
 	return render(c, "article/edit.html", data)
+}
+
+// ArticleDelete ...
+func ArticleDelete(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	if err := repository.ArticleDelete(id); err != nil {
+		c.Logger().Error(err.Error())
+
+		return c.JSON(http.StatusInternalServerError, "")
+	}
+	return c.JSON(http.StatusOK, fmt.Sprintf("Article %d is deleted", id))
 }
