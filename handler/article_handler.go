@@ -2,7 +2,6 @@ package handler
 
 import (
 	"go-tech-blog/model"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -65,15 +64,14 @@ func ArticleCreate(c echo.Context) error {
 // ArticleIndex ...
 func ArticleIndex(c echo.Context) error {
 	// 記事データの一覧を取得する
-	articles, err := repository.ArticleList()
+	articles, err := repository.ArticleListByCursor(0)
 	if err != nil {
-		log.Println(err.Error())
+		c.Logger().Error(err.Error())
+
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
 	data := map[string]interface{}{
-		"Message":  "Article Index",
-		"Now":      time.Now(),
 		"Articles": articles, // 記事データをテンプレートエンジンに渡す
 	}
 	return render(c, "article/index.html", data)
