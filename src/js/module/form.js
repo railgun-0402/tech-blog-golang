@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.endsWith('new')) {
         // 新規作成時のHTTPメソッドはPOST
         mode.method = 'POST';
-        mode.url = '/';
+        mode.url = '/articles';
     } else if (window.location.pathname.endsWith('edit')) {
         // 更新時にHTTPメソッドはPATCHを利用
         mode.method = 'PATCH';
-        mode.url = `/${window.location.pathname.split('/')[1]}`;
+        mode.url = `/articles/${window.location.pathname.split('/')[2]}`;
     }
     const { method, url } = mode;
     // CSRFトークンを取得
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
        const formData = new FormData(form);
        let status;
 
-       fetch(url, {
+       fetch(`/api${url}`, {
            method: method,
            headers: {'X-CSRF-Token': csrfToken },
            body: formData

@@ -64,6 +64,11 @@ func ArticleCreate(c echo.Context) error {
 
 // ArticleIndex ...
 func ArticleIndex(c echo.Context) error {
+	// "/articles"のパスでリクエストがあったら、"/"にリダイレクト
+	if c.Request().URL.Path == "/articles" {
+		c.Redirect(http.StatusPermanentRedirect, "/")
+	}
+
 	// 記事データの一覧を取得する
 	articles, err := repository.ArticleListByCursor(0)
 	if err != nil {
@@ -72,8 +77,15 @@ func ArticleIndex(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
+	// 取得記事最後のIDをカーソルとして設定
+	var cursor int
+	if len(articles) != 0 {
+		cursor = articles[len(articles)-1].ID
+	}
+
 	data := map[string]interface{}{
 		"Articles": articles, // 記事データをテンプレートエンジンに渡す
+		"Cursor":   cursor,
 	}
 	return render(c, "article/index.html", data)
 }
@@ -90,7 +102,7 @@ func ArticleNew(c echo.Context) error {
 
 // ArticleShow ...
 func ArticleShow(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("articleID"))
 
 	data := map[string]interface{}{
 		"Message": "Article Show",
@@ -103,7 +115,7 @@ func ArticleShow(c echo.Context) error {
 
 // ArticleEdit ...
 func ArticleEdit(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("articleID"))
 
 	data := map[string]interface{}{
 		"Message": "Article Edit",
@@ -116,7 +128,7 @@ func ArticleEdit(c echo.Context) error {
 
 // ArticleDelete ...
 func ArticleDelete(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("articleID"))
 
 	if err := repository.ArticleDelete(id); err != nil {
 		c.Logger().Error(err.Error())
@@ -124,4 +136,22 @@ func ArticleDelete(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "")
 	}
 	return c.JSON(http.StatusOK, fmt.Sprintf("Article %d is deleted", id))
+}
+
+// ArticleList ...
+func ArticleList(c echo.Context) error {
+	cursor, _ := strconv.Atoi(c.QueryParam("cursor"))
+
+	// 記事一覧は10件取得
+	articles, err := repository.ArticleListByCursor(cursor)
+
+	// エラーが発生した場合
+	if err != nil {
+		// サーバーのログにエラー内容を出力します。
+		c.Logger().Error(err.Error())
+
+		// クライアントにステータスコード 500 でレスポンスを返します。
+		return c.JSON(http.StatusInternalServerError, "")
+	}
+	return c.JSON(http.StatusOK, articles)
 }
