@@ -12,12 +12,12 @@
 <div class="l-col">
     <div class="page">
         <h1 class="page__title">記事一覧</h1>
-        <a class="page__new btn--primary" href="/new">新規</a>
+        <a class="page__new btn--primary" href="/articles/new">新規</a>
         <div class="page__articles">
             <div class="articles">
                 {% for article in Articles %}
                 <article class="articles__item-{{ article.ID }}">
-                    <a class="articles__item" href="/{{ article.ID }}">
+                    <a class="articles__item" href="/articles/{{ article.ID }}">
                         <div class="articles__item-title">{{ article.Title }}</div>
                         <div class="articles__item-date">{{ article.Created|date:"2006-01-02" }}</div>
                         <button class="articles__item-delete" data-id="{{ article.ID }}"><i class="fas fa-trash-alt"></i></button>

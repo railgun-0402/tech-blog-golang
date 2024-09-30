@@ -20,12 +20,18 @@ func main() {
 	repository.SetDB(db)
 
 	// ホームパスにリクエストが来ると、 `articleIndex`関数が処理される
-	e.GET("/", handler.ArticleIndex)
-	e.GET("/new", handler.ArticleNew)
-	e.GET("/:id", handler.ArticleShow)
-	e.GET("/:id/edit", handler.ArticleEdit)
-	e.POST("/", handler.ArticleCreate)
-	e.DELETE("/:id", handler.ArticleDelete)
+	e.GET("/", handler.ArticleIndex) // TOPページに記事一覧
+
+	// 記事一覧画面には "/" と "/articles" の両方でアクセス可能
+	e.GET("/articles", handler.ArticleIndex)           // 一覧画面
+	e.GET("/articles/new", handler.ArticleNew)         // 新規作成画面
+	e.GET("/articles/:articleID", handler.ArticleShow) // 詳細画面
+	e.GET("/articles/:id/edit", handler.ArticleEdit)   // 編集画面
+
+	// JSON返却処理は"/api"で開始する
+	e.GET("/api/articles", handler.ArticleList)                 // 一覧
+	e.POST("/api/articles", handler.ArticleCreate)              // 作成
+	e.DELETE("/api/articles/:articleID", handler.ArticleDelete) // 削除
 
 	// Webサーバーをポート番号 8080 で起動する
 	e.Logger.Fatal(e.Start(":8080"))
